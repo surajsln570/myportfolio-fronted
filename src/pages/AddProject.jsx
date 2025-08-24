@@ -20,7 +20,7 @@ export default function AddProject() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/admin/project/${id}`)
+    fetch(`https://myportfolio-backend-zxqb.onrender.com/admin/project/${id}`)
       .then((res) => res.json())
       .then((pro) => {
         setForm({

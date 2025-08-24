@@ -1,6 +1,6 @@
 
 export const serviceSignup = async (data) => {
-    const response = await fetch('http://localhost:3000/signup', {
+    const response = await fetch('https://myportfolio-backend-zxqb.onrender.com/signup', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -12,7 +12,7 @@ export const serviceSignup = async (data) => {
 
 export const serviceAddProjects = async (data) => {
     console.log("Data from serviceAddProjects", data);
-    const response = await fetch('http://localhost:3000/admin/add-projects', {
+    const response = await fetch('https://myportfolio-backend-zxqb.onrender.com/admin/add-projects', {
         method: "POST",
         body: data
     })
@@ -21,19 +21,19 @@ export const serviceAddProjects = async (data) => {
 }
 
 export const serviceGetProjects = async () => {
-    const response = await fetch('http://localhost:3000/')
+    const response = await fetch('https://myportfolio-backend-zxqb.onrender.com/')
     return response.json();
 }
 
 export const deleteServerProject = async (id) => {
-    const response = await fetch(`http://localhost:3000/admin/add-projects/${id}`, {
+    const response = await fetch(`https://myportfolio-backend-zxqb.onrender.com/admin/add-projects/${id}`, {
         method: 'DELETE'
     })
     return response.json();
 }
 
 export const updateServerProject = async (id) => {
-    const response = await fetch(`http://localhost:3000/admin/add-projects/${id}`, {
+    const response = await fetch(`https://myportfolio-backend-zxqb.onrender.com/admin/add-projects/${id}`, {
         method: 'GET',
         headers: 'application/json',
     })
@@ -42,7 +42,7 @@ export const updateServerProject = async (id) => {
 
 export const updateProjectServer = async (data, id) => {
     console.log("Data from serviceAddProjects",data, id);
-    const response = await fetch(`http://localhost:3000/admin/update/${id}`, {
+    const response = await fetch(`https://myportfolio-backend-zxqb.onrender.com/admin/update/${id}`, {
         method: "PUT",
         body: data
     })
@@ -50,7 +50,7 @@ export const updateProjectServer = async (data, id) => {
 }
 
 export const serviceLogin = async (data) => {
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch('https://myportfolio-backend-zxqb.onrender.com/login', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -62,7 +62,7 @@ export const serviceLogin = async (data) => {
 }
 
 export const serviceLogout = async () => {
-    const response = await fetch('http://localhost:3000/logout',
+    const response = await fetch('https://myportfolio-backend-zxqb.onrender.com/logout',
         {
             method: 'POST'
         }

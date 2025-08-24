@@ -8,7 +8,7 @@ export  function AuthProvider({children}) {
     const [user, setUser]= useState(null);
 
     useEffect(()=>{
-        fetch('http://localhost:3000/checkauth', {
+        fetch('https://myportfolio-backend-zxqb.onrender.com/checkauth', {
             method: 'GET',
             credentials: 'include' //send cookies
         })
