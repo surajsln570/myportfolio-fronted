@@ -8,9 +8,6 @@ import { FaGithub, FaPhoneVolume } from "react-icons/fa6";
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 
-
-
-
 export default function Contact() {
     const [formData, setFormData] = useState({
         name: '',
