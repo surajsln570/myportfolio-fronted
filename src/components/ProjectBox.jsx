@@ -6,7 +6,7 @@ export default function ProjectBox({ project, index, deleteProject, updateProjec
   const { isLoggedIn, user } = useContext(AuthContext);
   return (
     <div className='m-0 p-2 relative rounded-md shadow-[0_0_10px_purple] h-[400px] md:w-[300px] w-full text-center' key={index}>
-      <img className='h-[50%] md:w-[300px] w-full' src={`https://myportfolio-backend-zxqb.onrender.com/${project.projectImage}`} alt="" />
+      <img className='h-[50%] md:w-[300px] object-cover object-top w-full' src={`http://localhost:3000/${project.projectImage}`} alt="" />
       <h1 className="m-0 p-1 text-2xl font-bold text-purple-700">{project.projectName}</h1>
       <p className="text-xs text-teal-600">{project.projectDescription}</p>
       <a className="m-0 p-1 absolute bottom-0 right-[67px] text-lg text-red-400, hover:underline" href={`${project.projectUrl}`}>{project.projectUrl}</a>

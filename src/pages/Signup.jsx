@@ -1,39 +1,46 @@
 import React from 'react'
 import Navigation from '../components/Navigation'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { serviceSignup } from '../services/services.jsx'
 
 export default function Signup() {
   const [form, setForm] = useState({
     firstName: '',
-    lastName: '', 
+    lastName: '',
     mobile: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
-
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    let newFormValue = {...form}
+    let newFormValue = { ...form }
     newFormValue[name] = value;
     setForm(newFormValue);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  const result = await serviceSignup(form);
-  console.log(result);
+    try {
+      const result = await serviceSignup(form);
+      if (result.success) {
+        alert(result.message)
+        navigate('/login')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <div className='m-0 p-0'>
       <Navigation />
       <div className='m-0 p-0 flex justify-center items-center md:mt-[40px] mt-[65px]'>
         <form
-          onSubmit={handleSubmit} 
+          onSubmit={handleSubmit}
           className='m-0 p-[4%] mx-auto rounded-lg w-[60vw] bg-white shadow-[0_0_10px_purple] '
           action={'/signup'} method='POST'
         >
@@ -90,31 +97,31 @@ export default function Signup() {
           </div>
           <div className='m-0 p-0 w-[96%] mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2 mt-4' htmlFor='password'>Password</label>
-            <input 
-              className='shadow-[0_0_2px] appearance-none rounded bg-gray-200 w-full md:w-[50vw] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
-              type='password' 
+            <input
+              className='shadow-[0_0_2px] appearance-none rounded bg-gray-200 w-full md:w-[50vw] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              type='password'
               id='password'
-              name='password' 
+              name='password'
               placeholder='Enter your password'
               onChange={handleChange}
               value={form.password}
-              />
+            />
           </div>
           <div className='m-0 p-0 w-[96%] mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2 mt-4' htmlFor='confirmPassword'>Confirm Password</label>
-            <input 
-              className='shadow-[0_0_2px] appearance-none rounded bg-gray-200 w-full md:w-[50vw] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
-              type='password' 
+            <input
+              className='shadow-[0_0_2px] appearance-none rounded bg-gray-200 w-full md:w-[50vw] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              type='password'
               id='confirmPassword'
-              name='confirmPassword' 
-              placeholder='Confirm Password' 
+              name='confirmPassword'
+              placeholder='Confirm Password'
               onChange={handleChange}
               value={form.confirmPassword}
-              />
+            />
           </div>
           <div className='m-0 p-0 mb-4'>
-            <input className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer' 
-            type='submit' value={'Signup'}/>
+            <input className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
+              type='submit' value={'Signup'} />
           </div>
           <p className='text-center text-gray-500 text-xs'>Already have an account? <Link to='/login' className='text-blue-500 hover:text-blue-800'>Login</Link></p>
         </form>
