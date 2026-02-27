@@ -3,39 +3,109 @@ import Row from "../Row";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { CgGitPull } from "react-icons/cg";
 
-
-
 export default function Skills() {
-    return (
-        <Col id='skills' className={'items-center bg-gradient-to-b from-background1 to-background'}>
-            <h1 className="text-3xl font-bold mb-10">Technical Skills</h1>
-            <Row className="justify-center flex-col w-full md:flex-row items-start gap-5">
-                <Col className={'rounded-lg w-full'}>
-                    <Row className="text-2xl pb-5 font-semibold"> <AiOutlineAppstore className="text-primary" /><span>Frontend</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Core Technologies-</b>Tailwind CSS, Responsive Web Design (Mobile-First), Custom UI Components, Reusable Component Architecture, HTML5, CSS3, JavaScript (ES6+), React.js</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Frontend Development Skills-</b>React Hooks (useState, useEffect, useContext), Form Handling & Validation, REST API Integration, Authentication UI, File Upload Handling (FormData), State Management, Dynamic Routing</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Tools-</b>Git & GitHub, VS Code, Chrome DevTools</span></Row>
-                </Col>
-                <Col className={'rounded-lg w-full'}>
-                    <Row className="text-2xl pb-5 font-semibold"> <AiOutlineAppstore className="text-primary" /><span>Backend</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span><b>Core Technologies-</b>Node.js, Express.js, MongoDB, Mongoose</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Authentication & Security-</b>Session-based Authentication, JWT Authentication, Password Hashing (bcrypt), Protected Routes, Role-based Access Control (Admin/User)</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Database & API-</b>RESTful API Development, CRUD Operations, MongoDB Atlas, Schema Design, Data Validation, File Upload Handling (Multer), FormData Handling</span></Row>
-                    <Row className="text-mute text-lg"><CgGitPull className="text-primary" /> <span><b>Tools & Deployment-</b>Postman (API Testing), dotenv (Environment Variables), CORS Handling</span></Row>
-                </Col>
-                <Col className={'rounded-lg gap-0 w-full'}>
-                    <Row className="text-2xl pb-5 font-semibold"> <AiOutlineAppstore className="text-primary" /><span>Soft Skills</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Communication</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Problem-Solving</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Team Collaboration</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Time Management</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Leadership</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Creativity</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Client Handling</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Patience</span></Row>
-                    <Row className="text-mute"><CgGitPull className="text-primary" /> <span>Continuous Learning Mindset</span></Row>
-                </Col>
+  return (
+    <Col
+      id="skills"
+      className="items-center w-full py-16 px-6 bg-gradient-to-b from-background1 to-background"
+    >
+      <h1 className="text-4xl font-bold mb-14 text-center bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+        Technical Skills
+      </h1>
+
+      <Row className="justify-center flex-col md:flex-row w-full gap-8">
+
+        {/* Skill Card Component Style */}
+        {/* Frontend */}
+        <Col className="w-full md:w-1/3 p-6 rounded-2xl 
+                        backdrop-blur-lg bg-white/5 
+                        border border-white/10 
+                        shadow-lg hover:shadow-primary/20 
+                        transition-all duration-300 
+                        hover:-translate-y-2">
+
+          <Row className="text-2xl font-semibold mb-6 items-center gap-2 text-primary">
+            <AiOutlineAppstore />
+            <span>Frontend</span>
+          </Row>
+
+          {[
+            "React.js",
+            "JavaScript (ES6+)",
+            "React Hooks",
+            "State Management",
+            "REST API Integration",
+            "Tailwind CSS",
+            "Responsive Web Design",
+            "Git & GitHub",
+          ].map((skill, index) => (
+            <Row key={index} className="text-mute text-lg mb-3 items-center gap-2 hover:text-primary transition">
+              <CgGitPull className="text-primary" />
+              <span>{skill}</span>
             </Row>
+          ))}
         </Col>
-    )
+
+        {/* Backend */}
+        <Col className="w-full md:w-1/3 p-6 rounded-2xl 
+                        backdrop-blur-lg bg-white/5 
+                        border border-white/10 
+                        shadow-lg hover:shadow-primary/20 
+                        transition-all duration-300 
+                        hover:-translate-y-2">
+
+          <Row className="text-2xl font-semibold mb-6 items-center gap-2 text-primary">
+            <AiOutlineAppstore />
+            <span>Backend</span>
+          </Row>
+
+          {[
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "Mongoose",
+            "RESTful API Development",
+            "JWT Authentication",
+            "Password Hashing (bcrypt)",
+          ].map((skill, index) => (
+            <Row key={index} className="text-mute text-lg mb-3 items-center gap-2 hover:text-primary transition">
+              <CgGitPull className="text-primary" />
+              <span>{skill}</span>
+            </Row>
+          ))}
+        </Col>
+
+        {/* Soft Skills */}
+        <Col className="w-full md:w-1/3 p-6 rounded-2xl 
+                        backdrop-blur-lg bg-white/5 
+                        border border-white/10 
+                        shadow-lg hover:shadow-primary/20 
+                        transition-all duration-300 
+                        hover:-translate-y-2">
+
+          <Row className="text-2xl font-semibold mb-6 items-center gap-2 text-primary">
+            <AiOutlineAppstore />
+            <span>Soft Skills</span>
+          </Row>
+
+          {[
+            "Communication",
+            "Problem-Solving",
+            "Team Collaboration",
+            "Time Management",
+            "Leadership",
+            "Creativity",
+            "Client Handling",
+            "Continuous Learning Mindset",
+          ].map((skill, index) => (
+            <Row key={index} className="text-mute text-lg mb-3 items-center gap-2 hover:text-primary transition">
+              <CgGitPull className="text-primary" />
+              <span>{skill}</span>
+            </Row>
+          ))}
+        </Col>
+
+      </Row>
+    </Col>
+  );
 }

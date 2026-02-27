@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext.jsx'
 import { useContext } from 'react'
 
 export default function ProjectBox({ project, index, deleteProject, updateProject }) {
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn} = useContext(AuthContext);
   return (
     <div className='m-0 p-2 relative rounded-md shadow-[0_0_10px_purple] h-[400px] md:w-[300px] w-full text-center' key={index}>
       <img className='h-[50%] md:w-[300px] object-cover object-top w-full' src={`http://localhost:3000/${project.projectImage}`} alt="" />

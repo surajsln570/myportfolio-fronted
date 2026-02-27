@@ -1,70 +1,100 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { AuthContext } from '../context/AuthContext.jsx'
-import { useContext } from 'react'
 
 export default function Navigation() {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const { isLoggedIn, handleLogout } = useContext(AuthContext);
 
-    return (
-        <nav className="bg-white/80 backdrop-blur-md shadow-[0_0_10px_black] fixed w-full z-30 top-0 left-0">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-[80px]">
-                    <div className=''>
-                        <div className='text-2xl font-bold'>Suraj Singh</div>
-                    </div>
-                    <div className='flex gap-2'>
-                        <div className="hidden md:flex space-x-8">
-                            <Link to="/" className="hover:scale-102 hover:bg-purple-700 hover:text-white text-mute px-3 py-3 rounded transition-all duration-300">Home</Link>
-                            <a className="text-mute hover:scale-102 hover:text-white hover:bg-purple-700 px-3 py-3 rounded transition duration-300" href='/#about'>About</a>
-                            <a className="text-mute hover:scale-102 hover:text-white hover:bg-purple-700 px-3 py-3 rounded transition duration-300" href='/#skills'>Skillls</a>
-                            <a className="text-mute hover:scale-102 hover:text-white hover:bg-purple-700 px-3 py-3 rounded transition duration-300" href='/#projects'>Projects</a>
-                            <a className="text-mute hover:scale-102 hover:text-white hover:bg-purple-700 px-3 py-3 rounded transition duration-300" href='/#contact'>Contact</a>
-                        </div>
-                        <div className="flex relative  m-0 p-0">
-                            {
-                                (!isLoggedIn)
-                                    ?
-                                    ''
-                                    :
-                                    <button className="text-white hidden md:block cursor-pointer p-[8px] text-xl rounded-xl hover:scale-105 bg-red-500 hover:bg-red-700" type='submit' onClick={handleLogout}>logout</button>
-                            }
-                        </div>
-                    </div>
-                    <div className="md:hidden flex items-center">
-                        <button
-                            onClick={() => setMenuOpen(!menuOpen)}
-                            className="text-black focus:outline-none"
-                            aria-label="Toggle menu"
-                        >
-                            {(!menuOpen) ?
-                                <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                                :
-                                <FontAwesomeIcon className='text-2xl' icon={faXmark} />
-                            }
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {/* Mobile menu */}
-            {(menuOpen) ? (
-                <div className="md:hidden bg-black/50 backdrop-blur-3xl flex flex-col px-2 w-full space-y-1">
-                    <Link to="/" className="text-white hover:scale-101 hover:text-blue-400 px-3 py-2 rounded transition-all duration-300" onClick={() => setMenuOpen(false)}>Home</Link>
-                    <a className="block text-white hover:scale-101 hover:text-blue-400 px-3 py-2 rounded transition-all duration-300" href='/#about'>About</a>
-                    <a className="block text-white hover:scale-101 hover:text-blue-400 px-3 py-2 rounded transition-all duration-300" href='/#skills'>Skills</a>
-                    <a className="block text-white hover:scale-101 hover:text-blue-400 px-3 py-2 rounded transition-all duration-300" href='/#projects'>Projects</a>
-                    <a className="block text-white hover:scale-101 hover:text-blue-400 px-3 py-2 rounded transition-all duration-300" href='/#contact'>Contact</a>
-                    {isLoggedIn && <button className="text-white cursor-pointer p-[8px] text-xl rounded-xl hover:scale-101 transition-all duration-300 bg-red-500 hover:bg-red-700" type='submit' onClick={handleLogout}>logout</button>}
-                </div>
-            )
-                :
-                ''
-            }
-        </nav>
-    );
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { isLoggedIn, handleLogout } = useContext(AuthContext)
+
+  const navItem =
+    "relative text-gray-700 hover:text-purple-600 transition duration-300 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+
+  return (
+    <nav className="fixed w-full top-0 left-0 z-50 
+                    bg-white/70 backdrop-blur-lg 
+                    border-b border-gray-200">
+
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between h-[75px]">
+
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold text-gray-800 hover:text-purple-600 transition">
+            Suraj Singh
+          </Link>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+
+            <Link to="/" className={navItem}>Home</Link>
+            <a href="/#about" className={navItem}>About</a>
+            <a href="/#skills" className={navItem}>Skills</a>
+            <a href="/#projects" className={navItem}>Projects</a>
+            <a href="/#contact" className={navItem}>Contact</a>
+
+            {isLoggedIn && (
+              <button
+                onClick={handleLogout}
+                className="ml-4 px-4 py-2 rounded-lg 
+                           bg-red-500 text-white 
+                           hover:bg-red-600 
+                           transition duration-300 shadow-md">
+                Logout
+              </button>
+            )}
+
+          </div>
+
+          {/* Mobile Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-gray-800 text-2xl"
+            >
+              {menuOpen
+                ? <FontAwesomeIcon icon={faXmark} />
+                : (
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur-xl 
+                        border-t border-gray-200 
+                        flex flex-col px-6 py-4 space-y-4 shadow-lg">
+
+          <Link to="/" onClick={() => setMenuOpen(false)} className="text-gray-700 hover:text-purple-600 transition">Home</Link>
+          <a href="/#about" onClick={() => setMenuOpen(false)} className="text-gray-700 hover:text-purple-600 transition">About</a>
+          <a href="/#skills" onClick={() => setMenuOpen(false)} className="text-gray-700 hover:text-purple-600 transition">Skills</a>
+          <a href="/#projects" onClick={() => setMenuOpen(false)} className="text-gray-700 hover:text-purple-600 transition">Projects</a>
+          <a href="/#contact" onClick={() => setMenuOpen(false)} className="text-gray-700 hover:text-purple-600 transition">Contact</a>
+
+          {isLoggedIn && (
+            <button
+              onClick={() => {
+                handleLogout()
+                setMenuOpen(false)
+              }}
+              className="mt-2 px-4 py-2 rounded-lg 
+                         bg-red-500 text-white 
+                         hover:bg-red-600 transition">
+              Logout
+            </button>
+          )}
+
+        </div>
+      )}
+
+    </nav>
+  )
 }
