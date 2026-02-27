@@ -1,4 +1,4 @@
-const serverUrl = import.meta.env.VITE_SERVER_URL;
+export const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export const serviceSignup = async (data) => {
     const response = await fetch(`${serverUrl}/signup`, {

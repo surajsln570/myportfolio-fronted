@@ -1,6 +1,7 @@
 import React from 'react'
 import { createContext, useState, useEffect } from 'react'
 import {serviceLogout} from '../services/services'
+import { serverUrl } from '../services/services';
 export const AuthContext = createContext();
 
 export  function AuthProvider({children}) {
@@ -8,7 +9,7 @@ export  function AuthProvider({children}) {
     const [user, setUser]= useState(null);
     const [id, setId] = useState(null);
     const getUser = () => {
-        fetch('http://localhost:3000/checkauth', {
+        fetch(`${serverUrl}/checkauth`, {
             method: 'GET',
             credentials: 'include'
         })
