@@ -4,6 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { AuthContext } from '../../context/AuthContext.jsx';
 import Button from '../UI/Button.jsx'
 import Row from '../Row.jsx'
+import { serverUrl } from '../../services/services.jsx';
 
 export default function AddProject({ setAddProject }) {
 
@@ -22,7 +23,7 @@ export default function AddProject({ setAddProject }) {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/admin/project/${id}`)
+      fetch(`${serverUrl}/admin/project/${id}`)
         .then((res) => res.json())
         .then((pro) => {
           setForm({
