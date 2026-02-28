@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleBlog } from "../services/blogService";
 import Col from '../components/Col.jsx'
+import Navigation from "../components/Navigation.jsx";
 export default function SingleBlog() {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
