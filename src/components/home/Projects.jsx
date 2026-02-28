@@ -36,12 +36,9 @@ export default function Projects({ setAddProject }) {
 
   return (
     <Col id='projects'
-      className="items-center relative w-full py-16 px-6 
-                 bg-gradient-to-b from-background1 to-yellow-50">
+      className="items-center relative w-full py-16 px-6 bg-gradient-to-b from-background1 to-yellow-50">
 
-      <h1 className='text-4xl font-bold mb-12 text-center 
-                     bg-gradient-to-r from-primary to-purple-500 
-                     bg-clip-text text-transparent'>
+      <h1 className='text-4xl font-bold mb-12 text-center bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
         Latest Projects
       </h1>
 
@@ -51,16 +48,12 @@ export default function Projects({ setAddProject }) {
 
           <Col
             key={i}
-            className='group w-full md:w-1/3 relative overflow-hidden 
-                       rounded-2xl shadow-xl hover:shadow-2xl 
-                       transition-all duration-300 hover:-translate-y-2'>
+            className='group w-full md:w-1/3 relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2'>
 
             {/* Background Image */}
             <div
               style={{ backgroundImage: `url(${project.projectImage})` }}
-              className='absolute inset-0 bg-cover bg-center 
-                         transition-transform duration-500 
-                         group-hover:scale-110'
+              className='absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110'
             ></div>
 
             {/* Dark Overlay */}
@@ -97,9 +90,7 @@ export default function Projects({ setAddProject }) {
                 {project.projectTags && project.projectTags.map((tag, i) => (
                   <div
                     key={i}
-                    className='bg-white/20 backdrop-blur-sm 
-                               px-3 py-1 rounded-full 
-                               text-xs font-semibold'>
+                    className='bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold'>
                     {tag}
                   </div>
                 ))}
@@ -109,10 +100,7 @@ export default function Projects({ setAddProject }) {
               <Link
                 to={project.projectUrl}
                 target="_blank"
-                className='mt-4 inline-flex items-center gap-2 
-                           text-primary bg-white px-4 py-2 
-                           rounded-lg font-semibold 
-                           hover:scale-105 transition'>
+                className='mt-4 inline-flex items-center gap-2 text-primary bg-white px-4 py-2 rounded-lg font-semibold hover:scale-105 transition'>
                 <LiaExternalLinkAltSolid />
                 Visit Site
               </Link>
@@ -127,11 +115,7 @@ export default function Projects({ setAddProject }) {
       {user && (
         <div
           onClick={() => setAddProject(true)}
-          className="absolute right-8 bottom-6 
-                     bg-primary text-white 
-                     px-5 py-3 rounded-xl 
-                     shadow-lg cursor-pointer 
-                     hover:scale-105 transition">
+          className="absolute right-8 bottom-6 bg-primary text-white px-5 py-3 rounded-xl shadow-lg cursor-pointer hover:scale-105 transition">
           + Add Project
         </div>
       )}

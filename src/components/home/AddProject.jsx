@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
-import { serviceAddProjects, updateProjectServer } from '../../services/services.jsx'
+import { fetchOneProject, serviceAddProjects, updateProjectServer } from '../../services/services.jsx'
 import { IoCloseSharp } from "react-icons/io5";
 import { AuthContext } from '../../context/AuthContext.jsx';
 import Button from '../UI/Button.jsx'
 import Row from '../Row.jsx'
-import { serverUrl } from '../../services/services.jsx';
 
 export default function AddProject({ setAddProject }) {
 
@@ -21,28 +20,29 @@ export default function AddProject({ setAddProject }) {
   });
   const [tags, setTags] = useState([])
 
+  const fet = async () => {
+    const pro = await fetchOneProject(id)
+    setForm({
+      projectName: pro.projectName,
+      projectDescription: pro.projectDescription,
+      projectUrl: pro.projectUrl,
+      projectImage: null,
+      projectTags: pro.projectTags,
+      projectStatus: pro.projectStatus,
+      projectDate: '',
+      projectType: pro.projectType
+    })
+  }
+
   useEffect(() => {
     if (id) {
-      fetch(`${serverUrl}/admin/project/${id}`)
-        .then((res) => res.json())
-        .then((pro) => {
-          setForm({
-            projectName: pro.projectName,
-            projectDescription: pro.projectDescription,
-            projectUrl: pro.projectUrl,
-            projectImage: null,
-            projectTags: pro.projectTags,
-            projectStatus: pro.projectStatus,
-            projectDate: '',
-            projectType: pro.projectType
-          })
-        })
+      fet();
     }
   }, [])
   const AddTag = (e) => {
-   e.preventDefault();
-        setForm({ ...form, projectTags: [...form.projectTags, tags] })
-        setTags('')
+    e.preventDefault();
+    setForm({ ...form, projectTags: [...form.projectTags, tags] })
+    setTags('')
   }
 
   const handleChange = (e) => {
@@ -58,13 +58,13 @@ export default function AddProject({ setAddProject }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (id) {
       const formData = new FormData();//don't use JSON.stringify for FormData and set headers
       for (const key in form) {
-        if(key=='projectTags'){
+        if (key == 'projectTags') {
           formData.append('projectTags', JSON.stringify(form.projectTags))
-        }else{
+        } else {
           formData.append(key, form[key]);
         }
       }
@@ -74,9 +74,9 @@ export default function AddProject({ setAddProject }) {
     } else {
       const formData = new FormData();//don't use JSON.stringify for FormData and set headers
       for (const key in form) {
-        if(key=='projectTags'){
+        if (key == 'projectTags') {
           formData.append('projectTags', JSON.stringify(form.projectTags))
-        }else{
+        } else {
           formData.append(key, form[key]);
         }
       }
@@ -91,8 +91,8 @@ export default function AddProject({ setAddProject }) {
   }
   const delTag = (e, tag) => {
     e.preventDefault();
-    const newTag = form.projectTags.filter((p)=>p!=tag)
-    setForm({...form, projectTags:newTag})
+    const newTag = form.projectTags.filter((p) => p != tag)
+    setForm({ ...form, projectTags: newTag })
   }
 
   return (
@@ -143,38 +143,38 @@ export default function AddProject({ setAddProject }) {
             required />
         </div>
         <div className='flex flex-col space-y-2 w-full relative'>
-            <label className='font-bold' htmlFor="tags">Project Tags:</label>
-            <Row className='w-full relative bg-blue-100 h-[40px] rounded'>
-              <Row className={'relative -left-4'}>
-                {
-                form.projectTags && form.projectTags.map((tag, i)=>{
-                  return <Row className='bg-background2 p-2 rounded-2xl' key={i}><span>{tag}</span><IoCloseSharp onClick={(e)=>delTag(e, tag)} className='cursor-pointer' /> </Row>
+          <label className='font-bold' htmlFor="tags">Project Tags:</label>
+          <Row className='w-full relative bg-blue-100 h-[40px] rounded'>
+            <Row className={'relative -left-4'}>
+              {
+                form.projectTags && form.projectTags.map((tag, i) => {
+                  return <Row className='bg-background2 p-2 rounded-2xl' key={i}><span>{tag}</span><IoCloseSharp onClick={(e) => delTag(e, tag)} className='cursor-pointer' /> </Row>
                 })
               }
-              </Row>
-              <input
+            </Row>
+            <input
               className='w-full outline-none rounded'
               type="text"
               id="tags"
               name="tags"
               placeholder="e.g., React, Node.js"
-              onChange={(e)=>setTags(e.target.value)}
-              value={tags}             />
-              <Button onClick={(e)=>AddTag(e)} className='absolute right-0 top-1/2 -translate-y-1/2' variant={'primary'}>Add</Button>
-            </Row>              
-          </div>
-          <div className='flex flex-col space-y-2 w-full '>
-            <label className='font-bold' htmlFor="projectUrl">Project Link:</label>
-            <input
-              className='w-full outline-none bg-blue-100 rounded m-0 p-2'
-              type="url"
-              id="projectUrl"
-              name="projectUrl"
-              placeholder="Enter project link"
-              onChange={handleChange}
-              value={form.projectUrl}
-              required />
-          </div>
+              onChange={(e) => setTags(e.target.value)}
+              value={tags} />
+            <Button onClick={(e) => AddTag(e)} className='absolute right-0 top-1/2 -translate-y-1/2' variant={'primary'}>Add</Button>
+          </Row>
+        </div>
+        <div className='flex flex-col space-y-2 w-full '>
+          <label className='font-bold' htmlFor="projectUrl">Project Link:</label>
+          <input
+            className='w-full outline-none bg-blue-100 rounded m-0 p-2'
+            type="url"
+            id="projectUrl"
+            name="projectUrl"
+            placeholder="Enter project link"
+            onChange={handleChange}
+            value={form.projectUrl}
+            required />
+        </div>
         <div className='flex space-y-2 w-full justify-between'>
           <div className='flex flex-col w-[30%]'>
             <label className='font-bold' htmlFor="projectImage">Project Image</label>

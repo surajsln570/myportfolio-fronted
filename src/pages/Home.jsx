@@ -8,10 +8,13 @@ import Skills from '../components/home/Skills.jsx';
 import Projects from '../components/home/Projects.jsx';
 import Contact from '../components/home/Contact.jsx';
 import AddProject from '../components/home/AddProject.jsx';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 export default function Home() {
   const [addProject, setAddProject] = useState(false)
+  // const {blogs} = useContext(AuthContext)
+  const {loading,blogs,publishedBlogs, loadBlogs} = useContext(AuthContext)
 
   return (
     <div className='min-h-screen flex-col justify-start'>
@@ -23,10 +26,12 @@ export default function Home() {
         <About />
         <Col className={'items-center gap-5'}>
           <h1 className='text-3xl font-bold'>Read My Articles</h1>
-          <Row className={'justify-center md:flex-row flex-col gap-5'}>
-            <BlogBox />
-            <BlogBox />
-            <BlogBox />
+          <Row className={'justify-center w-full md:flex-row flex-col gap-5'}>
+            {publishedBlogs && publishedBlogs.map((blog) => (
+              <BlogBox
+                blog={blog}                
+                key={blog._id} />
+            ))}
           </Row>
           <Link className='underline text-lg text-purple-900' to={'/blog'}>Read More</Link>
         </Col>

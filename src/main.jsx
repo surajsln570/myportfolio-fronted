@@ -9,6 +9,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons'; // Imports all brand icons
 import { AuthProvider } from './context/AuthContext.jsx'
+import Blogs from './pages/Blogs.jsx'
+import SingleBlog from './pages/SingleBlog.jsx'
+import CreateBlog from './components/blog/CreateBlog.jsx'
 library.add(faCheckSquare, faCoffee, fab);
 const allPages = createBrowserRouter([
   {
@@ -18,6 +21,18 @@ const allPages = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/blog',
+    element: <Blogs />
+  },
+  {
+    path: '/edit-blog/:id',
+    element: <CreateBlog />
+  },
+  {
+    path: '/blog/:slug',
+    element: <SingleBlog />
   },
   {
     path: '/signup',
