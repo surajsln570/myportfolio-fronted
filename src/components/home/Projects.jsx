@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { deleteServerProject, serviceGetProjects } from '../../services/services';
 import { IoCloseSharp } from 'react-icons/io5';
 import { MdModeEditOutline } from "react-icons/md";
+import Loader from '../UI/Loader';
 
 export default function Projects({ setAddProject }) {
 
@@ -44,7 +45,7 @@ export default function Projects({ setAddProject }) {
 
       <Row className='gap-10 w-full md:flex-row flex-col md:px-10'>
 
-        {projects && projects.slice(0, 3).map((project, i) => (
+        {projects ? projects.slice(0, 3).map((project, i) => (
 
           <Col
             key={i}
@@ -107,8 +108,9 @@ export default function Projects({ setAddProject }) {
 
             </Col>
           </Col>
-
-        ))}
+          
+        )):
+          <Loader/>}
 
       </Row>
 
