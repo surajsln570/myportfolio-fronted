@@ -6,6 +6,7 @@ import BlogBox from "../components/blog/BlogBox.jsx";
 import { AuthContext } from "../context/AuthContext.jsx";
 import Col from "../components/Col.jsx";
 import Navigation from "../components/Navigation.jsx";
+import Loader from '../components/UI/Loader.jsx'
 
 export default function Blogs() {
   const { loading, user, publishedBlogs, blogs, loadBlogs } = useContext(AuthContext)
@@ -24,7 +25,7 @@ export default function Blogs() {
 
 
   if (loading) {
-    return <Col><Navigation /><div className="text-center py-20">Loading...</div></Col>;
+    return <Col><Navigation /><div className="text-center mt-[100px] relative py-20"><Loader/></div></Col>;
   }
 
   return (

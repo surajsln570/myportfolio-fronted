@@ -43,9 +43,9 @@ export default function Projects({ setAddProject }) {
         Latest Projects
       </h1>
 
-      <Row className='gap-10 relative w-full md:flex-row flex-col md:px-10'>
+      <Row className='gap-10 relative h-[300px] w-full md:flex-row flex-col md:px-10'>
 
-        {projects ? projects.slice(0, 3).map((project, i) => (
+        {projects && projects.slice(0, 3).map((project, i) => (
 
           <Col
             key={i}
@@ -109,8 +109,8 @@ export default function Projects({ setAddProject }) {
             </Col>
           </Col>
           
-        )):
-          <Loader/>}
+        ))}
+        {projects.length<=0 && <Loader/>}
 
       </Row>
 
