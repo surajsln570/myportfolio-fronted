@@ -43,7 +43,7 @@ export default function Projects({ setAddProject }) {
         Latest Projects
       </h1>
 
-      <Row className='gap-10 relative h-[300px] w-full md:flex-row flex-col md:px-10'>
+      <Row className='gap-10 relative min-h-[300px] w-full md:flex-row flex-col md:px-10'>
 
         {projects && projects.slice(0, 3).map((project, i) => (
 
