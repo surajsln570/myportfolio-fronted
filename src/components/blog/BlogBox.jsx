@@ -39,7 +39,7 @@ export default function BlogBox({
   }
 
   return (
-    <div className="w-full bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden">
+    <div className="w-full max-w-[33vw] bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden">
       {/* Cover Image */}
       {blog.coverImage && (
         <div className="relative">

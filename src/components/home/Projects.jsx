@@ -38,15 +38,11 @@ export default function Projects({ setAddProject }) {
   return (
     <Col id='projects'
       className="items-center relative w-full py-16 px-6 bg-gradient-to-b from-background1 to-yellow-50">
-
       <h1 className='text-4xl font-bold mb-12 text-center bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
         Latest Projects
       </h1>
-
       <Row className='gap-10 relative min-h-[300px] w-full md:flex-row flex-col md:px-10'>
-
         {projects && projects.slice(0, 3).map((project, i) => (
-
           <Col
             key={i}
             className='group w-full md:w-1/3 relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2'>
@@ -108,12 +104,9 @@ export default function Projects({ setAddProject }) {
 
             </Col>
           </Col>
-          
         ))}
-        {projects.length<=0 && <Loader/>}
-
+        {projects.length<1 && <Loader/>}
       </Row>
-
       {user && (
         <div
           onClick={() => setAddProject(true)}
@@ -121,7 +114,6 @@ export default function Projects({ setAddProject }) {
           + Add Project
         </div>
       )}
-
     </Col>
   )
 }

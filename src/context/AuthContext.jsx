@@ -42,8 +42,8 @@ export function AuthProvider({ children }) {
         }
     };
     const load = async () => {
-        await getUser();
-        await loadBlogs();
+     getUser();
+     loadBlogs();
     }
     useEffect(() => {
         load();
