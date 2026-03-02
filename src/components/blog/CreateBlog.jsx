@@ -45,7 +45,7 @@ export default function CreateBlog({ closeModal, setBlog, blog, loadBlogs }) {
       <div className="fixed inset-0 z-50  bg-black/50 flex items-center justify-center "></div>
       <form
         onSubmit={handleSubmit}
-        className="fixed z-60 p-10 top-5 left-1/2 -translate-x-1/2 overflow-y-auto h-[90vh] bg-white rounded-lg w-[95vw] md:w-[70vw]"
+        className="fixed z-60 p-5 md:p-10 top-5 left-1/2 -translate-x-1/2 overflow-y-auto h-[90vh] bg-white rounded-lg w-[95vw] md:w-[70vw]"
       >
         {/* Header */}
         <div className="flex justify-between items-center border-b pb-5">
