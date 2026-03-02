@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import Row from "../Row";
 import Button from "../UI/Button";
@@ -7,12 +7,15 @@ import { AuthContext } from "../../context/AuthContext";
 export default function BlogBox({
   blog,
   isAdmin = false,
+  setBlog,
   onDelete,
   onToggle,
+  setShowForm
 }) {
+  const {user} = useContext(AuthContext)
   const navigate = useNavigate();
   const [loadingAction, setLoadingAction] = useState(false);
-  const {user} = useContext(AuthContext);
+  const location = useLocation();
 
   if (!blog) return null;
 
@@ -29,6 +32,11 @@ export default function BlogBox({
     await onToggle(blog._id);
     setLoadingAction(false);
   };
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    setBlog(blog);
+    setShowForm(true);
+  }
 
   return (
     <div className="w-full bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden">
@@ -71,7 +79,6 @@ export default function BlogBox({
               : "Date Unknown"}
           </span>
           {/* Public View: Only show if published */}
-          {blog.isPublished && (
             <Button
               onClick={() => navigate(`/blog/${blog._id}`)}
               variant="primary"
@@ -79,12 +86,10 @@ export default function BlogBox({
             >
               Read More →
             </Button>
-          )}
         </Row>
-        {/* Admin Controls */}
-        {user && (
-          <div className="flex gap-2 mt-5">
-            <Button variant="secondary" className="text-xs px-3 py-1" onClick={() => navigate(`/edit-blog/${blog._id}`)}>
+          { user &&
+            location.pathname!=='/' && <div className="flex gap-2 mt-5">
+            <Button variant="secondary" className="text-xs px-3 py-1" onClick={(e)=>handleEdit(e)}>
               Edit
             </Button>
             <Button
@@ -99,7 +104,7 @@ export default function BlogBox({
               {loadingAction ? "Updating..." : blog.isPublished ? "Unpublish" : "Publish"}
             </Button>
           </div>
-        )}
+          }
       </div>
     </div>
   );

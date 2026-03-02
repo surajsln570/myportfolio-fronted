@@ -11,6 +11,7 @@ import Loader from '../components/UI/Loader.jsx'
 export default function Blogs() {
   const { loading, user, publishedBlogs, blogs, loadBlogs } = useContext(AuthContext)
   const [showForm, setShowForm] = useState(false);
+  const [blog, setBlog] = useState(null)
   const handleDelete = async (id) => {
     const res = await deleteBlog(id);
     await loadBlogs();
@@ -48,13 +49,15 @@ export default function Blogs() {
           {
             user
               ?
-              blogs && blogs.map((blog) => (
+              blogs && blogs.map((b) => (
                 <BlogBox
-                  blog={blog}
+                  blog={b}
+                  setBlog={setBlog}
+                  setShowForm={setShowForm}
                   isAdmin={true}
                   onDelete={handleDelete}
                   onToggle={handleToggle}
-                  key={blog._id} />
+                  key={b._id} />
               ))
               :
               publishedBlogs && publishedBlogs.map((blog) => (
@@ -68,18 +71,8 @@ export default function Blogs() {
           }
         </div>
         {/* Modal */}
-        {showForm && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white w-full max-w-3xl rounded-2xl p-8 relative">
-              <button
-                onClick={() => setShowForm(false)}
-                className="absolute top-4 right-4 text-xl"
-              >
-                ✕
-              </button>
-              <CreateBlog loadBlogs={loadBlogs} closeModal={() => setShowForm(false)} />
-            </div>
-          </div>
+        {showForm && (            
+              <CreateBlog blog={blog} setBlog={setBlog} setShowForm={setShowForm} loadBlogs={loadBlogs} closeModal={() => setShowForm(false)} />
         )}
       </div>
     </Col>

@@ -1,117 +1,161 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Button from "../UI/Button";
-import { useParams, useNavigate } from "react-router-dom";
-import { createBlog, fetchSingleBlog, updateBlog } from "../../services/blogService";
+import { createBlog, updateBlog } from "../../services/blogService";
 
-export default function CreateBlog({ closeModal, loadBlogs }) {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+export default function CreateBlog({ closeModal, setBlog, blog, loadBlogs }) {
   const [form, setForm] = useState({
-    title: "",
-    excerpt: "",
-    category: "",
-    coverImage: "",
-    content: "",
+    title: blog ? blog.title : "",
+    excerpt: blog ? blog.excerpt : "",
+    category: blog ? blog.category : "",
+    coverImage: blog ? blog.coverImage : "",
+    content: blog ? blog.content : "",
   });
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   // ✅ Handle Change
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  // ✅ Fetch Old Data in Edit Mode
-  useEffect(() => {
-    const getBlog = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchSingleBlog(id);
-        // Agar backend { blog: {} } return kare
-        const blog = data.blog ? data.blog : data;
-        setForm({
-          title: blog.title || "",
-          excerpt: blog.excerpt || "",
-          category: blog.category || "",
-          coverImage: blog.coverImage || "",
-          content: blog.content || "",
-        });
-      } catch (error) {
-        console.log("Error fetching blog:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (id) {
-      getBlog();
-    }
-  }, [id]);
+
   // ✅ Submit (Create / Update)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setButtonDisabled(true)
     try {
-      if(id){
-        const res = await updateBlog(id, form)
-        console.log(res);
+      if (blog) {
+        const res = await updateBlog(blog._id, form)
+        alert(res.message)
+        setBlog(null)
       } else {
         const res = await createBlog(form)
-        console.log(res);
+        alert(res.message)
       }
-      if(closeModal){
+      if (closeModal) {
+        await loadBlogs();
         closeModal();
-        loadBlogs();
-      }else {
-        navigate('/blog')
       }
     } catch (error) {
       console.log("Error submitting blog:", error);
+    } finally {
+      setButtonDisabled(false)
     }
   };
-  if (loading) return <p>Loading...</p>;
+
   return (
-    <form onSubmit={handleSubmit} className={`${id ? "px-[200px] pt-[50px] ": ""} space-y-4`}>
-      {
-        id && <h1>Edit Your Article</h1>
-      }
-      <input
-        name="title"
-        value={form.title}
-        placeholder="Title"
-        className="w-full border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <input
-        name="excerpt"
-        value={form.excerpt}
-        placeholder="Excerpt"
-        className="w-full border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <input
-        name="category"
-        value={form.category}
-        placeholder="Category"
-        className="w-full border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <input
-        name="coverImage"
-        value={form.coverImage}
-        placeholder="Cover Image URL"
-        className="w-full border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <textarea
-        name="content"
-        value={form.content}
-        rows="6"
-        placeholder="Write your blog..."
-        className="w-full border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <Button
-        type="submit"
-        className="bg-primary text-white px-6 py-2 rounded-lg"
+    <div className="">
+      <div className="fixed inset-0 z-50  bg-black/50 flex items-center justify-center "></div>
+      <form
+        onSubmit={handleSubmit}
+        className="fixed z-60 p-10 top-5 left-1/2 -translate-x-1/2 overflow-y-auto h-[90vh] bg-white rounded-lg w-[95vw] md:w-[70vw]"
       >
-        {id ? "Update Blog" : "Publish"}
-      </Button>
-    </form>
-  );
+        {/* Header */}
+        <div className="flex justify-between items-center border-b pb-5">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">
+              {blog ? "Edit Blog" : "Create New Blog"}
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              {blog
+                ? "Update your article details below."
+                : "Write and publish your new article."}
+            </p>
+          </div>
+          {closeModal && (
+            <button
+              type="button"
+              onClick={() => {
+                setBlog(null)
+                closeModal()
+              }}
+              className="text-gray-400 hover:text-black text-xl"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">
+            Blog Title
+          </label>
+          <input
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            placeholder="Enter blog title..."
+            className="w-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 p-3 rounded-xl outline-none transition"
+          />
+        </div>
+
+        {/* Excerpt */}
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">
+            Short Description
+          </label>
+          <input
+            name="excerpt"
+            value={form.excerpt}
+            onChange={handleChange}
+            placeholder="Write short summary..."
+            className="w-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 p-3 rounded-xl outline-none transition"
+          />
+        </div>
+
+        {/* Category + Cover Image Row */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Category
+            </label>
+            <input
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              placeholder="Technology, Business..."
+              className="w-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 p-3 rounded-xl outline-none transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Cover Image URL
+            </label>
+            <input
+              name="coverImage"
+              value={form.coverImage}
+              onChange={handleChange}
+              placeholder="Paste image URL..."
+              className="w-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 p-3 rounded-xl outline-none transition"
+            />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">
+            Blog Content
+          </label>
+          <textarea
+            name="content"
+            value={form.content}
+            onChange={handleChange}
+            rows="8"
+            placeholder="Write your blog content here..."
+            className="w-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 p-4 rounded-xl outline-none transition resize-none"
+          />
+        </div>
+
+        {/* Action Button */}
+        <div className="flex justify-end">
+          <Button
+            disabled={buttonDisabled}
+            type="submit"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+          >
+            {blog ? "Update Blog" : "Publish Blog"}
+          </Button>
+        </div>
+      </form>
+    </div>
+  )
 }

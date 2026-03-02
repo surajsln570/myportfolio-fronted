@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleBlog } from "../services/blogService";
 import Col from '../components/Col.jsx'
 import Navigation from "../components/Navigation.jsx";
+import { AuthContext } from "../context/AuthContext.jsx";
+import Loader from "../components/UI/Loader.jsx";
 export default function SingleBlog() {
   const { slug } = useParams();
+  const {blogs} = useContext(AuthContext);
   const [blog, setBlog] = useState(null);
-
-  useEffect(() => {
-    const loadBlog = async () => {
-      const data = await fetchSingleBlog(slug);
-      setBlog(data.blog);
-    };
-
-    loadBlog();
-  }, [slug]);
+ useEffect(() => {
+  const foundBlog = blogs.find((b) => b._id === slug);
+  setBlog(foundBlog);
+}, [slug, blogs])
 
   if (!blog) {
-    return <Col><Navigation /> <div className="text-center py-20">Loading...</div></Col>
+    return <Col><Navigation /><div className="text-center mt-[100px] relative py-20"><Loader/></div></Col>
   }
 
   return (
