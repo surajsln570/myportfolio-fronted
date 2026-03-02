@@ -80,6 +80,7 @@ export default function BlogBox({
           </span>
           {/* Public View: Only show if published */}
             <Button
+              disabled={loadingAction}
               onClick={() => navigate(`/blog/${blog._id}`)}
               variant="primary"
               className="text-xs px-4 py-1.5 rounded-full"
